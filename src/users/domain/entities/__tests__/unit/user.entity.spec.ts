@@ -2,8 +2,8 @@ import { UserEntity, UserProps } from '../../user.entity';
 import { userDataBuilder } from '@/users/domain/testing/helpers/user-data-builder';
 
 describe('UserEntity unit tests', () => {
-  let props: UserProps
-  let sut: UserEntity
+  let props: UserProps;
+  let sut: UserEntity;
 
   beforeEach(() => {
     props = userDataBuilder({});
@@ -23,6 +23,12 @@ describe('UserEntity unit tests', () => {
     expect(typeof sut.props.name).toBe('string');
   });
 
+  it('Setter of name field', () => {
+    sut['name'] = 'New name';
+    expect(sut.props.name).toEqual('New name');
+    expect(typeof sut.props.name).toBe('string');
+  });
+
   it('Getter of email field', () => {
     expect(sut.props.email).toBeDefined();
     expect(sut.props.email).toEqual(props.email);
@@ -35,8 +41,24 @@ describe('UserEntity unit tests', () => {
     expect(typeof sut.props.password).toBe('string');
   });
 
+  it('Setter of password field', () => {
+    sut['password'] = 'New password';
+    expect(sut.props.password).toEqual('New password');
+    expect(typeof sut.props.password).toBe('string');
+  });
+
   it('Getter of createdAt field', () => {
     expect(sut.props.createdAt).toBeDefined();
     expect(sut.props.createdAt).toBeInstanceOf(Date);
+  });
+
+  it('Should update an user', () => {
+    sut.update('New name');
+    expect(sut.props.name).toEqual('New name');
+  });
+
+  it('Should update the password field', () => {
+    sut.updatePassword('New password');
+    expect(sut.props.password).toEqual('New password');
   });
 });
